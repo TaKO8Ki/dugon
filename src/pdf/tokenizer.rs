@@ -67,7 +67,9 @@ mod test {
         assert_eq!(
             Tokenizer {
                 file: file,
-                contents: "%PDF-1.6".to_string()
+                contents: "%PDF-1.6".to_string(),
+                string_value: None,
+                token_type: 1
             }
             .header()
             .unwrap(),
