@@ -13,7 +13,7 @@ pub struct Tokenizer {
 }
 
 impl Tokenizer {
-    pub fn header(&self) -> Result<u8, String> {
+    pub fn check_pdf_header(&self) -> Result<u8, String> {
         match self.contents.find("%PDF-1.") {
             Some(idx) => Ok(self
                 .contents
@@ -51,6 +51,13 @@ impl Tokenizer {
             None => Err(anyhow!("PDF startxref not found.")),
         }
     }
+
+    pub fn get_file_pointer(&mut self) -> Result<u64, anyhow::Error> {
+        match self.file.seek(std::io::SeekFrom::Current(0)) {
+            Ok(pos) => Ok(pos),
+            Err(err) => Err(anyhow!(err)),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -60,7 +67,7 @@ mod test {
     use tempfile::tempdir;
 
     #[test]
-    fn test_header() {
+    fn test_check_pdf_header() {
         let dir = tempdir().unwrap();
         let file_path = dir.path().join("example.pdf");
         let file = File::create(file_path).unwrap();
@@ -71,7 +78,7 @@ mod test {
                 string_value: None,
                 token_type: 1
             }
-            .header()
+            .check_pdf_header()
             .unwrap(),
             6
         )
