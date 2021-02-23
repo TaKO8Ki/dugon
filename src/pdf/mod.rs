@@ -1,2 +1,13 @@
+pub mod array;
+pub mod file;
+pub mod pdf_dictionary;
+pub mod pdf_literal;
+pub mod pdf_name;
+pub mod pdf_number;
+pub mod pdf_object;
+pub mod pdf_stream;
+pub mod pdf_string;
+pub mod pr_indirect_reference;
+pub mod pr_stream;
 pub mod reader;
 pub mod tokenizer;
