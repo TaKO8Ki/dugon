@@ -1,6 +1,14 @@
-# dugon
+<div align="center">
 
-A modern alternative to ‘PDFtk Server’.
+ # dugon
+
+ A modern alternative to ‘PDFtk Server’.
+
+ [![github workflow status](https://img.shields.io/github/workflow/status/TaKO8Ki/dugon/CI/main)](https://github.com/TaKO8Ki/dugon/actions)
+
+ [Usage](#Usage) | [Examples](examples) | [Docs](https://docs.rs/beaver)
+
+</div>
 
 ## Features
 
