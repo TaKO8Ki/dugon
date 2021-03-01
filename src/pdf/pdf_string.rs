@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct PdfString {
     pub hex_writing: bool,
     pub encoding: String,

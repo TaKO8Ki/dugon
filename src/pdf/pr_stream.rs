@@ -3,6 +3,7 @@ use crate::pdf::pdf_name::PdfName;
 use crate::pdf::pdf_number::PdfNumber;
 use crate::pdf::pdf_object::PdfObject;
 use std::collections::HashMap;
+#[derive(Clone)]
 pub struct PrStream {
     pub offset: u64,
     pub length: Option<u64>,
@@ -30,7 +31,7 @@ impl PrStream {
 
     pub fn put_all(&mut self, dict: PdfDictionary) {
         for (key, value) in dict.hash_map.iter() {
-            self.hash_map.insert(*key, *value);
+            self.hash_map.insert(key.clone(), value.clone());
         }
     }
 

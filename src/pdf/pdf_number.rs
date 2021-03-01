@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct PdfNumber {
     pub value: f64,
     pub bytes: Vec<u8>,

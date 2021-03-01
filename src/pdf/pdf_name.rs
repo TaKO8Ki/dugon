@@ -1,4 +1,4 @@
-#[derive(Hash, Eq, PartialEq)]
+#[derive(Hash, Eq, PartialEq, Clone)]
 pub enum PdfName {
     A,
     Aa,
@@ -7,11 +7,16 @@ pub enum PdfName {
     Length,
     Size,
     Index,
+    W,
+    Prev,
+    Xref,
+    XrefStm,
+    Type,
     Other(String),
 }
 
 impl PdfName {
-    fn new<'a>(self) -> &'a [u8] {
+    fn new<'a>(self) -> Vec<u8> {
         let name = match self {
             PdfName::A => "A".to_string(),
             PdfName::Aa => "AA".to_string(),
@@ -21,7 +26,7 @@ impl PdfName {
         let length = name.len();
         let mut pdf_name = String::new();
         pdf_name.push('/');
-        let character: char;
+        let mut character: char;
         for ch in name.chars() {
             character = ((ch as u8) & 0xff) as char;
             match character {
@@ -44,6 +49,6 @@ impl PdfName {
                 }
             }
         }
-        pdf_name.as_bytes()
+        pdf_name.as_bytes().to_vec()
     }
 }

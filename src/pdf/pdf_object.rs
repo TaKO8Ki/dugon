@@ -4,12 +4,14 @@ use crate::pdf::{
     pr_stream::PrStream,
 };
 
+#[derive(Clone)]
 pub enum PdfObject {
     Boolean,
     Number(PdfNumber),
     String(PdfString),
     Name(PdfName),
     Array(Array),
+    XArray(Vec<u64>),
     Dictionary(PdfDictionary),
     PrStream(PrStream),
     Null,

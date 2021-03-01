@@ -35,6 +35,7 @@ pub struct Tokenizer {
     pub generation: u64,
 }
 
+#[derive(Clone)]
 pub enum TokenType {
     Number,
     String,
@@ -91,9 +92,9 @@ impl Tokenizer {
 
     pub fn next_valid_token(&mut self) -> Result<(), anyhow::Error> {
         let mut level = 0;
-        let n1 = None;
-        let n2 = None;
-        let ptr = 0;
+        let mut n1 = None;
+        let mut n2 = None;
+        let mut ptr = 0;
         while self.next_token()? {
             if let TokenType::Comment = self.token_type {
                 continue;
@@ -105,7 +106,7 @@ impl Tokenizer {
                         _ => return Ok(()),
                     }
                     ptr = self.file.get_file_pointer()?;
-                    n1 = self.string_value;
+                    n1 = self.string_value.clone();
                     level += 1;
                 }
                 1 => {
@@ -118,7 +119,7 @@ impl Tokenizer {
                             return Ok(());
                         }
                     }
-                    n2 = self.string_value;
+                    n2 = self.string_value.clone();
                     level += 1;
                 }
                 _ => {
@@ -129,14 +130,14 @@ impl Tokenizer {
                             self.string_value = n1;
                             return Ok(());
                         }
-                        _ => match self.string_value {
+                        _ => match self.string_value.clone() {
                             Some(value) if value == "R" => {
                                 self.file.seek(ptr);
                                 self.token_type = TokenType::Number;
                                 self.string_value = n1;
                                 return Ok(());
                             }
-                            None => (),
+                            _ => (),
                         },
                     }
                     self.token_type = TokenType::Ref;

@@ -1,6 +1,7 @@
 use crate::pdf::reader::Reader;
 
+#[derive(Clone)]
 pub struct PrIndirectReference {
-    number: u64,
-    generation: u64,
+    pub number: u64,
+    pub generation: u64,
 }
